@@ -1,0 +1,72 @@
+﻿<Window x:Class="AdvancedCalculator.Views.BasicCalculatorView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodel="clr-namespace:AdvancedCalculator.ViewModels"
+        mc:Ignorable="d"
+        Title="BasicCalculatorView" Height="600" Width="400"
+        MinHeight="300" MinWidth="300"
+        MaxHeight="700" MaxWidth="700">
+    <Window.DataContext>
+        <viewmodel:BasicCalculatorViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/ButtonThemes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--<TextBox Text="{Binding Display}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" IsReadOnly="True" TextAlignment="Right" FontSize="20" Background="#b8e6fc" BorderBrush="#b8e6fc"></TextBox>-->
+        <TextBox Text="{Binding Display, Mode=OneWay}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" IsReadOnly="True" TextAlignment="Right" FontSize="26" Background="#b8e6fc" BorderBrush="#b8e6fc"></TextBox>
+
+        <Button Content="0" Command="{Binding NumberPressedCommand}" CommandParameter="0" Grid.Row="8" Grid.Column="2" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="1" Command="{Binding NumberPressedCommand}" CommandParameter="1" Grid.Row="7" Grid.Column="1" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="2" Command="{Binding NumberPressedCommand}" CommandParameter="2" Grid.Row="7" Grid.Column="2" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="3" Command="{Binding NumberPressedCommand}" CommandParameter="3" Grid.Row="7" Grid.Column="3" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="4" Command="{Binding NumberPressedCommand}" CommandParameter="4" Grid.Row="6" Grid.Column="1" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="5" Command="{Binding NumberPressedCommand}" CommandParameter="5" Grid.Row="6" Grid.Column="2" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="6" Command="{Binding NumberPressedCommand}" CommandParameter="6" Grid.Row="6" Grid.Column="3" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="7" Command="{Binding NumberPressedCommand}" CommandParameter="7" Grid.Row="5" Grid.Column="1" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="8" Command="{Binding NumberPressedCommand}" CommandParameter="8" Grid.Row="5" Grid.Column="2" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="9" Command="{Binding NumberPressedCommand}" CommandParameter="9" Grid.Row="5" Grid.Column="3" Style="{StaticResource BasicButton}"></Button>
+
+        <Button Content="%" Command="{Binding UnaryOperatorPressedCommand}" CommandParameter="%" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="C" Command="{Binding ClearPressedCommand}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Style="{StaticResource ClearButton}"></Button>
+        <Button Content="1/x" Command="{Binding UnaryOperatorPressedCommand}" CommandParameter="reciprocal" Grid.Row="4" Grid.Column="1" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="x²" Command="{Binding UnaryOperatorPressedCommand}" CommandParameter="pow2" Grid.Row="4" Grid.Column="2" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="√x" Command="{Binding UnaryOperatorPressedCommand}" CommandParameter="sqrt" Grid.Row="4" Grid.Column="3" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="+/-" Command="{Binding ChangeSingPressedCommand}" Grid.Row="8" Grid.Column="1" Style="{StaticResource BasicButton}"></Button>
+        <Button Content="," Command="{Binding DecimalPointPressedCommand}" Grid.Row="8" Grid.Column="3" Style="{StaticResource BasicButton}"></Button>
+
+        <Button Content="+" Command="{Binding OperationPressedCommand}" CommandParameter="+" Grid.Row="4" Grid.Column="4" Style="{StaticResource OperationButton}"></Button>
+        <Button Content="-" Command="{Binding OperationPressedCommand}" CommandParameter="-" Grid.Row="5" Grid.Column="4" Style="{StaticResource OperationButton}"></Button>
+        <Button Content="×" Command="{Binding OperationPressedCommand}" CommandParameter="×" Grid.Row="6" Grid.Column="4" Style="{StaticResource OperationButton}"></Button>
+        <Button Content="÷" Command="{Binding OperationPressedCommand}" CommandParameter="÷" Grid.Row="7" Grid.Column="4" Style="{StaticResource OperationButton}"></Button>
+
+        <Button Content="=" Command="{Binding EqualsPressedCommand}" Style="{StaticResource EqualsButton}" Grid.Row="8" Grid.Column="4"></Button>
+    </Grid>
+</Window>
