@@ -1,9 +1,17 @@
 ﻿<Application x:Class="AdvancedCalculator.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:AdvancedCalculator"
-             StartupUri="Views/BasicCalculatorView.xaml">
+             xmlns:viewModel="clr-namespace:AdvancedCalculator.ViewModels"
+             xmlns:view="clr-namespace:AdvancedCalculator.Views">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type viewModel:BasicCalculatorViewModel}">
+            <view:BasicCalculatorView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ScientificCalculatorViewModel}">
+            <view:ScientificCalculatorView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:GraphViewModel}">
+            <view:GraphView />
+        </DataTemplate>
     </Application.Resources>
 </Application>
