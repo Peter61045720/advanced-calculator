@@ -19,15 +19,15 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="0"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -35,7 +35,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBox Text="{Binding Display, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" IsReadOnly="True" TextAlignment="Right" FontSize="26" Background="#b8e6fc" BorderBrush="#b8e6fc"></TextBox>

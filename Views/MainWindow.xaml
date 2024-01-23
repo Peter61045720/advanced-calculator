@@ -16,9 +16,10 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Grid.Column="0">
-            <Button Content="Basic" Height="25" Command="{Binding NavigateToBasicCalculatorCommand}"/>
-            <Button Content="Scientific" Height="25" Command="{Binding NavigateToScientificCalculatorCommand}"/>
-            <Button Content="Graph" Height="25" Command="{Binding NavigateToGraphCommand}"/>
+            <Button Content="Basic calc." Height="25" Command="{Binding NavigateToBasicCalculatorCommand}"/>
+            <Button Content="Scientific calc." Height="25" Command="{Binding NavigateToScientificCalculatorCommand}"/>
+            <Button Content="Graphs" Height="25" Command="{Binding NavigateToGraphVisualizationCommand}"/>
+            <Button Content="Functions" Height="25" Command="{Binding NavigateToFunctionPlotCommand}"/>
         </StackPanel>
 
         <ContentControl Grid.Column="1" Content="{Binding NavigationService.CurrentView}">

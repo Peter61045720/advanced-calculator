@@ -10,8 +10,11 @@
         <DataTemplate DataType="{x:Type viewModel:ScientificCalculatorViewModel}">
             <view:ScientificCalculatorView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:GraphViewModel}">
-            <view:GraphView />
+        <DataTemplate DataType="{x:Type viewModel:GraphVisualizationViewModel}">
+            <view:GraphVisualizationView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:FunctionPlotViewModel}">
+            <view:FunctionPlotView />
         </DataTemplate>
     </Application.Resources>
 </Application>
