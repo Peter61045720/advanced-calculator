@@ -10,8 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="GraphShape" Version="1.2.1" />
+    <PackageReference Include="GraphShape.Controls" Version="1.2.2" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="QuikGraph" Version="2.5.0" />
   </ItemGroup>
 
 </Project>

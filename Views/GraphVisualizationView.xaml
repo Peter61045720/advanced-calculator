@@ -4,12 +4,50 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModel="clr-namespace:AdvancedCalculator.ViewModels"
+             xmlns:graphShape="clr-namespace:GraphShape.Controls;assembly=GraphShape.Controls"
+             xmlns:controls="clr-namespace:AdvancedCalculator.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <viewModel:GraphVisualizationViewModel />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/GraphThemes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <Label>Graphing</Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0">Layout Algorithm Type:</Label>
+        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Algorithms}" SelectedItem="{Binding SelectedAlgorithm}" DisplayMemberPath="." />
+        <!--<graphShape:GraphLayout 
+            x:Name="MyGraphLayout" 
+            Graph="{Binding Graph}"
+            LayoutAlgorithmType="{Binding SelectedAlgorithm}" 
+            OverlapRemovalAlgorithmType="FSA" 
+            HighlightAlgorithmType="Simple" 
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2" />-->
+        
+        <controls:PocGraphLayout 
+            Graph="{Binding Graph}"
+            LayoutAlgorithmType="{Binding SelectedAlgorithm}" 
+            OverlapRemovalAlgorithmType="FSA"
+            HighlightAlgorithmType="Simple" 
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>
