@@ -1,12 +1,11 @@
 ﻿<UserControl x:Class="AdvancedCalculator.Views.GraphVisualizationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:AdvancedCalculator.ViewModels"
-             xmlns:graphShape="clr-namespace:GraphShape.Controls;assembly=GraphShape.Controls"
              xmlns:controls="clr-namespace:AdvancedCalculator.Controls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <viewModel:GraphVisualizationViewModel />
@@ -20,34 +19,89 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <Label Grid.Row="0" Grid.Column="0">Layout Algorithm Type:</Label>
-        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Algorithms}" SelectedItem="{Binding SelectedAlgorithm}" DisplayMemberPath="." />
-        <!--<graphShape:GraphLayout 
-            x:Name="MyGraphLayout" 
-            Graph="{Binding Graph}"
-            LayoutAlgorithmType="{Binding SelectedAlgorithm}" 
-            OverlapRemovalAlgorithmType="FSA" 
-            HighlightAlgorithmType="Simple" 
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="2" />-->
-        
-        <controls:PocGraphLayout 
-            Graph="{Binding Graph}"
-            LayoutAlgorithmType="{Binding SelectedAlgorithm}" 
-            OverlapRemovalAlgorithmType="FSA"
-            HighlightAlgorithmType="Simple" 
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="2" />
+
+        <GroupBox Header="Layout" Grid.Row="0" Grid.Column="1" Margin="0 5">
+            <DockPanel>
+                <Label Content="Layout Algorithm Type:" HorizontalAlignment="Left" />
+                <ComboBox ItemsSource="{Binding Algorithms}" SelectedItem="{Binding SelectedAlgorithm}" DisplayMemberPath="." HorizontalAlignment="Right" />
+            </DockPanel>
+        </GroupBox>
+
+        <GroupBox Header="Vertices" Grid.Row="1" Grid.Column="1" Margin="0 5">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Label Content="Vertex ID:" />
+                    <TextBox Text="{Binding VertexId}" Height="25" Width="50" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Add Vertex" Height="25" Width="100"  Command="{Binding AddVertexCommand}" />
+                    <Button Content="Remove Vertex" Height="25" Width="100" Command="{Binding RemoveVertexCommand}" />
+                </StackPanel>
+            </DockPanel>
+        </GroupBox>
+
+        <GroupBox Header="Edges" Grid.Row="2" Grid.Column="1" Margin="0 5">
+            <DockPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                    <DockPanel>
+                        <Label Content="Source vertex ID:" HorizontalAlignment="Left" />
+                        <TextBox Text="{Binding SourceVertexId}" Height="25" Width="50" HorizontalAlignment="Right" />
+                    </DockPanel>
+                    <DockPanel>
+                        <Label Content="Target vertex ID:" HorizontalAlignment="Left" />
+                        <TextBox Text="{Binding TargetVertexId}"  Height="25" Width="50" HorizontalAlignment="Right" />
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Add Edge" Height="25" Width="100" Command="{Binding AddEdgeCommand}" />
+                    <Button Content="Remove Edge" Height="25" Width="100" Command="{Binding RemoveEdgeCommand}" />
+                </StackPanel>
+            </DockPanel>
+        </GroupBox>
+
+        <GroupBox Header="Misc" Grid.Row="3" Grid.Column="1">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Zoom" />
+                    <Slider
+                        Minimum="{Binding MinZoom}" Maximum="{Binding MaxZoom}"
+                        Value="{Binding ZoomFactor, Mode=TwoWay}"
+                        TickFrequency="0.1" IsSnapToTickEnabled="True"
+                        Width="200" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Vertex count:" />
+                    <Label Content="{Binding Graph.VertexCount}" />
+                    <Label Content="Edge Count:" />
+                    <Label Content="{Binding Graph.EdgeCount}" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <controls:PocGraphLayout
+                Graph="{Binding Graph}"
+                LayoutAlgorithmType="{Binding SelectedAlgorithm}"
+                OverlapRemovalAlgorithmType="FSA"
+                HighlightAlgorithmType="Simple"
+                Grid.Row="4"
+                Grid.Column="1">
+            <controls:PocGraphLayout.LayoutTransform>
+                <ScaleTransform
+                    ScaleX="{Binding ZoomFactor}"
+                    ScaleY="{Binding ZoomFactor}" />
+            </controls:PocGraphLayout.LayoutTransform>
+        </controls:PocGraphLayout>
     </Grid>
 </UserControl>
