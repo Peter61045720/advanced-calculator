@@ -28,6 +28,12 @@ namespace AdvancedCalculator.ViewModels
         }
 
         [RelayCommand]
+        public void NavigateToComplexCalculator()
+        {
+            NavigationService.NavigateTo<ComplexCalculatorViewModel>();
+        }
+
+        [RelayCommand]
         public void NavigateToGraphVisualization()
         {
             NavigationService.NavigateTo<GraphVisualizationViewModel>();

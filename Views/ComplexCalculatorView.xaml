@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="AdvancedCalculator.Views.ComplexCalculatorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodel="clr-namespace:AdvancedCalculator.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewmodel:ComplexCalculatorViewModel />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Complex 1" Grid.Row="0" Grid.Column="1" Margin="0 0 5 0">
+            <StackPanel Orientation="Vertical">
+                <DockPanel>
+                    <Label Content="Real:" HorizontalAlignment="Left" />
+                    <TextBox Text="{Binding LeftOperandReal, StringFormat={}{0:0.00;-0.00;0}, UpdateSourceTrigger=PropertyChanged}"
+                             Height="20" Width="50" HorizontalAlignment="Right" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Imaginary:" HorizontalAlignment="Left" />
+                    <TextBox Text="{Binding LeftOperandImag, StringFormat={}{0:0.00;-0.00;0}, UpdateSourceTrigger=PropertyChanged}"
+                             Height="20" Width="50" HorizontalAlignment="Right" />
+                </DockPanel>
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="|z1|" Command="{Binding AbsCommand}" CommandParameter="z1" Height="25" Width="30" />
+                        <Button Content="z1*" Command="{Binding ConjugateCommand}" CommandParameter="z1" Height="25" Width="30" />
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <Button Command="{Binding SwapCommand}" Grid.Row="0" Grid.Column="2" Height="25" Width="40">
+            <TextBlock Text="↔" FontSize="20" VerticalAlignment="Center" />
+        </Button>
+
+        <GroupBox Header="Complex 2" Grid.Row="0" Grid.Column="3" Margin="5 0 0 0">
+            <StackPanel Orientation="Vertical">
+                <DockPanel>
+                    <Label Content="Real:" HorizontalAlignment="Left" />
+                    <TextBox Text="{Binding RightOperandReal, StringFormat={}{0:0.00;-0.00;0}, UpdateSourceTrigger=PropertyChanged}"
+                             Height="20" Width="50" HorizontalAlignment="Right" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Imaginary:" HorizontalAlignment="Left" />
+                    <TextBox Text="{Binding RightOperandImag, StringFormat={}{0:0.00;-0.00;0}, UpdateSourceTrigger=PropertyChanged}"
+                             Height="20" Width="50" HorizontalAlignment="Right" />
+                </DockPanel>
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="|z2|" Command="{Binding AbsCommand}" CommandParameter="z2" Height="25" Width="30" />
+                        <Button Content="z2*" Command="{Binding ConjugateCommand}" CommandParameter="z2" Height="25" Width="30" />
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="Result" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Width="200" Margin="0 10">
+            <StackPanel Orientation="Vertical">
+                <Label Content="{Binding Result}" HorizontalAlignment="Center" />
+                <Button Content="Clear" Command="{Binding ClearCommand}" />
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Width="100">
+            <Button Content="z1 + z2" Command="{Binding AddCommand}" />
+            <Button Content="z1 - z2" Command="{Binding SubtractCommand}" />
+            <Button Content="z1 × z2" Command="{Binding MultiplyCommand}" />
+            <Button Content="z1 ÷ z2" Command="{Binding DivideCommand}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

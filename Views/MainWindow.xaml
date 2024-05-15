@@ -18,6 +18,7 @@
         <StackPanel Grid.Column="0">
             <Button Content="Basic calc." Height="25" Command="{Binding NavigateToBasicCalculatorCommand}" />
             <Button Content="Scientific calc." Height="25" Command="{Binding NavigateToScientificCalculatorCommand}" />
+            <Button Content="Complex calc." Height="25" Command="{Binding NavigateToComplexCalculatorCommand}" />
             <Button Content="Graphs" Height="25" Command="{Binding NavigateToGraphVisualizationCommand}" />
             <Button Content="Functions" Height="25" Command="{Binding NavigateToFunctionPlotCommand}" />
         </StackPanel>

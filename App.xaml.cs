@@ -24,6 +24,7 @@ namespace AdvancedCalculator
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<BasicCalculatorViewModel>();
             services.AddSingleton<ScientificCalculatorViewModel>();
+            services.AddSingleton<ComplexCalculatorViewModel>();
             services.AddSingleton<GraphVisualizationViewModel>();
             services.AddSingleton<FunctionPlotViewModel>();
             services.AddSingleton<INavigationService, NavigationService>();

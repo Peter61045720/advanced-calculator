@@ -10,6 +10,9 @@
         <DataTemplate DataType="{x:Type viewModel:ScientificCalculatorViewModel}">
             <view:ScientificCalculatorView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ComplexCalculatorViewModel}">
+            <view:ComplexCalculatorView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:GraphVisualizationViewModel}">
             <view:GraphVisualizationView />
         </DataTemplate>
