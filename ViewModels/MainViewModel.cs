@@ -34,6 +34,12 @@ namespace AdvancedCalculator.ViewModels
         }
 
         [RelayCommand]
+        public void NavigateToMatrixCalculator()
+        {
+            NavigationService.NavigateTo<MatrixCalculatorViewModel>();
+        }
+
+        [RelayCommand]
         public void NavigateToGraphVisualization()
         {
             NavigationService.NavigateTo<GraphVisualizationViewModel>();
