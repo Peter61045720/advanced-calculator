@@ -23,32 +23,24 @@ namespace AdvancedCalculator.ViewModels
         [ObservableProperty]
         private string? _resultString;
 
+        [ObservableProperty]
+        private double? _scalarA;
+
+        [ObservableProperty]
+        private double? _scalarB;
+
+        [ObservableProperty]
+        private int? _powerA;
+
+        [ObservableProperty]
+        private int? _powerB;
+
         public MatrixCalculatorViewModel()
         {
             MatrixA = new MatrixModel(3, 3);
             MatrixB = new MatrixModel(3, 3);
             MatrixStringA = MatrixToString(MatrixA.Data);
             MatrixStringB = MatrixToString(MatrixB.Data);
-        }
-
-        [RelayCommand]
-        private void UpdateMatrix(string name)
-        {
-            if (name == nameof(MatrixA))
-            {
-                MatrixA = new MatrixModel(StringToMatrix(MatrixStringA));
-            }
-            else if (name == nameof(MatrixB))
-            {
-                MatrixB = new MatrixModel(StringToMatrix(MatrixStringB));
-            }
-        }
-
-        [RelayCommand]
-        private void UpdateMatrices()
-        {
-            MatrixA = new MatrixModel(StringToMatrix(MatrixStringA));
-            MatrixB = new MatrixModel(StringToMatrix(MatrixStringB));
         }
 
         [RelayCommand]
@@ -73,6 +65,98 @@ namespace AdvancedCalculator.ViewModels
             UpdateMatrices();
             var result = MatrixA.Data * MatrixB.Data;
             ResultString = MatrixToString(result);
+        }
+
+        [RelayCommand]
+        private void PointwiseMultiplyMatrices()
+        {
+            UpdateMatrices();
+            var result = MatrixA.Data.PointwiseMultiply(MatrixB.Data);
+            ResultString = MatrixToString(result);
+        }
+
+        [RelayCommand]
+        private void MultiplyByScalar(string name)
+        {
+            UpdateMatrix(name);
+
+            if (name == nameof(MatrixA))
+            {
+                MatrixA.Data *= ScalarA ?? 0;
+                MatrixStringA = MatrixToString(MatrixA.Data);
+                ResultString = MatrixToString(MatrixA.Data);
+            }
+            else if (name == nameof(MatrixB))
+            {
+                MatrixB.Data *= ScalarB ?? 0;
+                MatrixStringB = MatrixToString(MatrixB.Data);
+                ResultString = MatrixToString(MatrixB.Data);
+            }
+        }
+
+        [RelayCommand]
+        private void RaiseToPower(string name)
+        {
+            UpdateMatrix(name);
+
+            if (name == nameof(MatrixA))
+            {
+                MatrixA.Data = MatrixA.Data.Power(PowerA ?? 1);
+                MatrixStringA = MatrixToString(MatrixA.Data);
+                ResultString = MatrixToString(MatrixA.Data);
+            }
+            else if (name == nameof(MatrixB))
+            {
+                MatrixB.Data = MatrixB.Data.Power(PowerB ?? 1);
+                MatrixStringB = MatrixToString(MatrixB.Data);
+                ResultString = MatrixToString(MatrixB.Data);
+            }
+        }
+
+        [RelayCommand]
+        private void DecomposeLU(string name)
+        {
+            UpdateMatrix(name);
+
+            if (name == nameof(MatrixA))
+            {
+                var decomposition = MatrixA.Data.LU();
+                MatrixA.Data = decomposition.L;
+                MatrixB.Data = decomposition.U;
+            }
+            else if (name == nameof(MatrixB))
+            {
+                var decomposition = MatrixB.Data.LU();
+                MatrixA.Data = decomposition.L;
+                MatrixB.Data = decomposition.U;
+            }
+
+            MatrixStringA = MatrixToString(MatrixA.Data);
+            MatrixStringB = MatrixToString(MatrixB.Data);
+            ResultString = "Matrix A = L, Matrix B = U";
+        }
+
+        [RelayCommand]
+        private void DecomposeQR(string name)
+        {
+            UpdateMatrix(name);
+
+            if (name == nameof(MatrixA))
+            {
+                var decomposition = MatrixA.Data.QR();
+                MatrixA.Data = decomposition.Q;
+                MatrixB.Data = decomposition.R;
+            }
+            else if (name == nameof(MatrixB))
+            {
+                var decomposition = MatrixB.Data.QR();
+                MatrixA.Data = decomposition.Q;
+                MatrixB.Data = decomposition.R;
+            }
+
+            MatrixStringA = MatrixToString(MatrixA.Data);
+            MatrixStringB = MatrixToString(MatrixB.Data);
+            ResultString = "Matrix A = Q, Matrix B = R";
         }
 
         [RelayCommand]
@@ -151,6 +235,10 @@ namespace AdvancedCalculator.ViewModels
             MatrixStringA = MatrixToString(MatrixA.Data);
             MatrixStringB = MatrixToString(MatrixB.Data);
             ResultString = null;
+            ScalarA = null;
+            ScalarB = null;
+            PowerA = null;
+            PowerB = null;
         }
 
         [RelayCommand]
@@ -159,7 +247,25 @@ namespace AdvancedCalculator.ViewModels
             (MatrixA, MatrixB, MatrixStringA, MatrixStringB) = (MatrixB, MatrixA, MatrixStringB, MatrixStringA);
         }
 
-        private string MatrixToString(Matrix<double> matrix)
+        private void UpdateMatrix(string name)
+        {
+            if (name == nameof(MatrixA))
+            {
+                MatrixA = new MatrixModel(StringToMatrix(MatrixStringA));
+            }
+            else if (name == nameof(MatrixB))
+            {
+                MatrixB = new MatrixModel(StringToMatrix(MatrixStringB));
+            }
+        }
+
+        private void UpdateMatrices()
+        {
+            MatrixA = new MatrixModel(StringToMatrix(MatrixStringA));
+            MatrixB = new MatrixModel(StringToMatrix(MatrixStringB));
+        }
+
+        private static string MatrixToString(Matrix<double> matrix)
         {
             var rows = matrix.RowCount;
             var cols = matrix.ColumnCount;
@@ -186,7 +292,7 @@ namespace AdvancedCalculator.ViewModels
             return result.ToString();
         }
 
-        private Matrix<double> StringToMatrix(string input)
+        private static Matrix<double> StringToMatrix(string input)
         {
             var rows = input.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             var rowCount = rows.Length;

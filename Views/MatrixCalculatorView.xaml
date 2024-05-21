@@ -27,7 +27,7 @@
         <DockPanel Grid.Row="0" Grid.Column="1">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label Content="Matrix A" HorizontalAlignment="Center" />
-                <TextBox Text="{Binding MatrixStringA, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="100" Width="160" />
+                <TextBox Text="{Binding MatrixStringA, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="14" Height="100" Width="160" />
                 <StackPanel Orientation="Horizontal">
                     <Button Content="A^T" Command="{Binding TransposeCommand}" CommandParameter="MatrixA" Height="25" Width="40" />
                     <Button Content="A^-1" Command="{Binding CalculateInverseCommand}" CommandParameter="MatrixA" Height="25" Width="40" />
@@ -47,7 +47,7 @@
         <DockPanel Grid.Row="0" Grid.Column="3">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label Content="Matrix B" HorizontalAlignment="Center" />
-                <TextBox Text="{Binding MatrixStringB, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="100" Width="160" />
+                <TextBox Text="{Binding MatrixStringB, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="14" Height="100" Width="160" />
                 <StackPanel Orientation="Horizontal">
                     <Button Content="B^T" Command="{Binding TransposeCommand}" CommandParameter="MatrixB" Height="25" Width="40" />
                     <Button Content="B^-1" Command="{Binding CalculateInverseCommand}" CommandParameter="MatrixB" Height="25" Width="40" />
@@ -57,16 +57,47 @@
             </StackPanel>
         </DockPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0 15">
+        <DockPanel Grid.Row="1" Grid.Column="1" Margin="0 15">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Button Content="Multiply by" Command="{Binding MultiplyByScalarCommand}" CommandParameter="MatrixA" Height="25" Width="90" />
+                    <TextBox Text="{Binding ScalarA, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="25" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Button Content="Apply power" Command="{Binding RaiseToPowerCommand}" CommandParameter="MatrixA" Height="25" Width="90" />
+                    <TextBox Text="{Binding PowerA, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="25" />
+                </StackPanel>
+                <Button Content="LU decomposition" Command="{Binding DecomposeLUCommand}" CommandParameter="MatrixA" Height="25" Width="115" />
+                <Button Content="QR decomposition" Command="{Binding DecomposeQRCommand}" CommandParameter="MatrixA" Height="25" Width="115" />
+            </StackPanel>
+        </DockPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2" Margin="0 15">
             <Button Content="A + B" Command="{Binding AddMatricesCommand}" Height="25" Width="150" />
             <Button Content="A - B" Command="{Binding SubtractMatricesCommand}" Height="25" Width="150" />
             <Button Content="A * B" Command="{Binding MultiplyMatricesCommand}" Height="25" Width="150" />
+            <Button Content="A ⋅ B" Command="{Binding PointwiseMultiplyMatricesCommand}" Height="25" Width="150" />
         </StackPanel>
+
+        <DockPanel Grid.Row="1" Grid.Column="3" Margin="0 15">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Button Content="Multiply by" Command="{Binding MultiplyByScalarCommand}" CommandParameter="MatrixB" Height="25" Width="90" />
+                    <TextBox Text="{Binding ScalarB, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="25" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Button Content="Apply power" Command="{Binding RaiseToPowerCommand}" CommandParameter="MatrixB" Height="25" Width="90" />
+                    <TextBox Text="{Binding PowerB, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="25" />
+                </StackPanel>
+                <Button Content="LU decomposition" Command="{Binding DecomposeLUCommand}" CommandParameter="MatrixB" Height="25" Width="115" />
+                <Button Content="QR decomposition" Command="{Binding DecomposeQRCommand}" CommandParameter="MatrixB" Height="25" Width="115" />
+            </StackPanel>
+        </DockPanel>
 
         <DockPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Width="200">
             <StackPanel Orientation="Vertical">
                 <Label Content="Result:" HorizontalAlignment="Center" />
-                <TextBox Text="{Binding ResultString, Mode=OneWay}" IsReadOnly="True" AcceptsReturn="True" Height="100" />
+                <TextBox Text="{Binding ResultString, Mode=OneWay}" IsReadOnly="True" AcceptsReturn="True" FontSize="14" Height="100" />
                 <Button Content="Clear" Command="{Binding ClearCommand}" />
             </StackPanel>
         </DockPanel>
