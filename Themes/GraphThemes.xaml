@@ -126,7 +126,8 @@
         <Setter Property="MinWidth" Value="1" />
         <Setter Property="MinHeight" Value="1" />
         <Setter Property="Background" Value="Green" />
-        <Setter Property="Foreground" Value="Silver" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Edge.Color}" />
+        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Edge.Weight}" />
         <Setter Property="Opacity" Value="0.5" />
         <Style.Triggers>
             <Trigger
