@@ -1,6 +1,7 @@
 ﻿using AdvancedCalculator.Structures;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GraphShape.Algorithms.OverlapRemoval;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -13,6 +14,9 @@ namespace AdvancedCalculator.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<string> _algorithms;
+
+        [ObservableProperty]
+        private OverlapRemovalParameters _overlapRemovalParameters;
 
         [ObservableProperty]
         private string _selectedAlgorithm;
@@ -62,6 +66,8 @@ namespace AdvancedCalculator.ViewModels
             ];
 
             SelectedAlgorithm = "BoundedFR";
+
+            OverlapRemovalParameters = new OverlapRemovalParameters { HorizontalGap = 25, VerticalGap = 25 };
         }
 
         [RelayCommand]

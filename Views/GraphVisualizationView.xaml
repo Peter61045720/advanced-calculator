@@ -94,6 +94,7 @@
                 Graph="{Binding Graph}"
                 LayoutAlgorithmType="{Binding SelectedAlgorithm}"
                 OverlapRemovalAlgorithmType="FSA"
+                OverlapRemovalParameters="{Binding OverlapRemovalParameters}"
                 HighlightAlgorithmType="Simple"
                 Grid.Row="4"
                 Grid.Column="1">
