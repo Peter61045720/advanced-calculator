@@ -5,24 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:AdvancedCalculator.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="500"
-        MinHeight="500" MinWidth="600"
-        MaxHeight="800" MaxWidth="900">
-
+        Title="MainWindow" Height="700" Width="700"
+        MinHeight="600" MinWidth="650">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/MenuButtonThemes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0">
-            <Button Content="Basic calc." Height="25" Command="{Binding NavigateToBasicCalculatorCommand}" />
-            <Button Content="Scientific calc." Height="25" Command="{Binding NavigateToScientificCalculatorCommand}" />
-            <Button Content="Complex calc." Height="25" Command="{Binding NavigateToComplexCalculatorCommand}" />
-            <Button Content="Matrix calc." Height="25" Command="{Binding NavigateToMatrixCalculatorCommand}" />
-            <Button Content="Graphs" Height="25" Command="{Binding NavigateToGraphVisualizationCommand}" />
-            <Button Content="Functions" Height="25" Command="{Binding NavigateToFunctionPlotCommand}" />
-        </StackPanel>
+        <Border Grid.Column="0" BorderBrush="DarkGray" BorderThickness="0,0,1,0">
+            <StackPanel Orientation="Vertical">
+                <Button Content="Basic calculator" Command="{Binding NavigateToBasicCalculatorCommand}" Style="{StaticResource MenuButton}" />
+                <Button Content="Scientific calculator" Command="{Binding NavigateToScientificCalculatorCommand}" Style="{StaticResource MenuButton}" />
+                <Button Content="Complex calculator" Command="{Binding NavigateToComplexCalculatorCommand}" Style="{StaticResource MenuButton}" />
+                <Button Content="Matrix calculator" Command="{Binding NavigateToMatrixCalculatorCommand}" Style="{StaticResource MenuButton}" />
+                <Button Content="Graph visualization" Command="{Binding NavigateToGraphVisualizationCommand}" Style="{StaticResource MenuButton}" />
+                <Button Content="Function plotting" Command="{Binding NavigateToFunctionPlotCommand}" Style="{StaticResource MenuButton}" />
+            </StackPanel>
+        </Border>
 
         <ContentControl Grid.Column="1" Content="{Binding NavigationService.CurrentView}">
         </ContentControl>
