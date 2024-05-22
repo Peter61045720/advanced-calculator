@@ -2,8 +2,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GraphShape.Algorithms.OverlapRemoval;
+using QuikGraph.Algorithms.Search;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Media;
 
 namespace AdvancedCalculator.ViewModels
 {
@@ -39,6 +41,8 @@ namespace AdvancedCalculator.ViewModels
         [ObservableProperty]
         private double _maxZoom = 2.0;
 
+        private PocGraph _backupGraph;
+
         public GraphVisualizationViewModel()
         {
             Graph = new PocGraph();
@@ -47,10 +51,21 @@ namespace AdvancedCalculator.ViewModels
             [
                 new PocVertex("A"),
                 new PocVertex("B"),
+                //new PocVertex("C"),
+                //new PocVertex("D"),
+                //new PocVertex("E"),
+                //new PocVertex("F"),
             ];
 
             Graph.AddVertexRange(vertices);
             Graph.AddEdge(EdgeFactory(vertices[0], vertices[1]));
+            //Graph.AddEdge(EdgeFactory(vertices[0], vertices[2]));
+            //Graph.AddEdge(EdgeFactory(vertices[1], vertices[2]));
+            //Graph.AddEdge(EdgeFactory(vertices[2], vertices[3]));
+            //Graph.AddEdge(EdgeFactory(vertices[3], vertices[1]));
+            //Graph.AddEdge(EdgeFactory(vertices[4], vertices[0]));
+            //Graph.AddEdge(EdgeFactory(vertices[4], vertices[3]));
+            //Graph.AddEdge(EdgeFactory(vertices[4], vertices[5]));
 
             Algorithms =
             [
@@ -66,8 +81,57 @@ namespace AdvancedCalculator.ViewModels
             ];
 
             SelectedAlgorithm = "BoundedFR";
-
             OverlapRemovalParameters = new OverlapRemovalParameters { HorizontalGap = 25, VerticalGap = 25 };
+            var clone = Graph.Clone();
+            _backupGraph = new PocGraph();
+            _backupGraph.AddVertexRange(clone.Vertices);
+            _backupGraph.AddEdgeRange(clone.Edges);
+        }
+
+        [RelayCommand]
+        private void RunBreadthFirstSearch()
+        {
+            BackUpGraph();
+
+            List<PocEdge> bfsResult = [];
+            var bfs = new BreadthFirstSearchAlgorithm<PocVertex, PocEdge>(Graph);
+            bfs.TreeEdge += e => bfsResult.Add(e);
+
+            if (!string.IsNullOrWhiteSpace(VertexId))
+            {
+                bfs.Compute(GetVertexById(VertexId)!);
+            }
+            else
+            {
+                MessageBox.Show("Please enter a vertex ID below!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            foreach (var edge in bfsResult)
+            {
+                edge.Color = Brushes.Red;
+            }
+
+            ClearEdges();
+            Graph.AddEdgeRange(bfsResult);
+            OnPropertyChanged(nameof(Graph));
+
+            MessageBox.Show($"Edge path:\n{string.Join(", ", bfsResult)}", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        [RelayCommand]
+        private void RestoreGraph()
+        {
+            var clone = _backupGraph.Clone();
+            Graph = new PocGraph();
+            Graph.AddVertexRange(clone.Vertices);
+            // TODO: fix copying issues
+            foreach (var edge in clone.Edges)
+            {
+                edge.Color = Brushes.Silver;
+            }
+            Graph.AddEdgeRange(clone.Edges);
+            OnPropertyChanged(nameof(Graph));
         }
 
         [RelayCommand]
@@ -171,9 +235,35 @@ namespace AdvancedCalculator.ViewModels
             }
         }
 
-        private static PocEdge EdgeFactory(PocVertex source, PocVertex target)
+        private PocVertex? GetVertexById(string id)
         {
-            return new PocEdge($"{source.ID}->{target.ID}", source, target);
+            return Graph.Vertices.FirstOrDefault(v => v.ID == id);
+        }
+
+        //private PocEdge? GetEdgeById(string id)
+        //{
+        //    return Graph.Edges.FirstOrDefault(e => e.ID == id);
+        //}
+
+        private void ClearEdges()
+        {
+            foreach (var vertex in Graph.Vertices)
+            {
+                Graph.ClearEdges(vertex);
+            }
+        }
+
+        private void BackUpGraph()
+        {
+            var clone = Graph.Clone();
+            _backupGraph = new PocGraph();
+            _backupGraph.AddVertexRange(clone.Vertices);
+            _backupGraph.AddEdgeRange(clone.Edges);
+        }
+
+        private static PocEdge EdgeFactory(PocVertex source, PocVertex target, int weight = 0)
+        {
+            return new PocEdge($"{source.ID}->{target.ID}", source, target, weight);
         }
     }
 }

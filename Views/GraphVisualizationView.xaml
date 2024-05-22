@@ -29,6 +29,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -39,7 +40,16 @@
             </DockPanel>
         </GroupBox>
 
-        <GroupBox Header="Vertices" Grid.Row="1" Grid.Column="1" Margin="0 5">
+        <GroupBox Header="Algorithms" Grid.Row="1" Grid.Column="1" Margin="0 5">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="BreadthFirstSearch" Command="{Binding RunBreadthFirstSearchCommand}" Height="25" Width="150" />
+                </StackPanel>
+                <Button Content="Restore Graph" Command="{Binding RestoreGraphCommand}" Height="25" Width="100" />
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="Vertices" Grid.Row="2" Grid.Column="1" Margin="0 5">
             <DockPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <Label Content="Vertex ID:" />
@@ -52,7 +62,7 @@
             </DockPanel>
         </GroupBox>
 
-        <GroupBox Header="Edges" Grid.Row="2" Grid.Column="1" Margin="0 5">
+        <GroupBox Header="Edges" Grid.Row="3" Grid.Column="1" Margin="0 5">
             <DockPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                     <DockPanel>
@@ -71,7 +81,7 @@
             </DockPanel>
         </GroupBox>
 
-        <GroupBox Header="Misc" Grid.Row="3" Grid.Column="1">
+        <GroupBox Header="Misc" Grid.Row="4" Grid.Column="1">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Zoom" />
@@ -96,7 +106,7 @@
                 OverlapRemovalAlgorithmType="FSA"
                 OverlapRemovalParameters="{Binding OverlapRemovalParameters}"
                 HighlightAlgorithmType="Simple"
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="1">
             <controls:PocGraphLayout.LayoutTransform>
                 <ScaleTransform
