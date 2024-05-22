@@ -41,12 +41,15 @@
         </GroupBox>
 
         <GroupBox Header="Algorithms" Grid.Row="1" Grid.Column="1" Margin="0 5">
-            <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="BreadthFirstSearch" Command="{Binding RunBreadthFirstSearchCommand}" Height="25" Width="150" />
+            <DockPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Breadth First Search" Command="{Binding RunBreadthFirstSearchCommand}" Height="25" Width="150" />
+                        <Button Content="Dijkstra Shortest Path" Command="{Binding RunDijkstraShortestPathCommand}" Height="25" Width="150" />
+                    </StackPanel>
+                    <Button Content="Restore Graph" Command="{Binding RestoreGraphCommand}" Height="25" Width="100" />
                 </StackPanel>
-                <Button Content="Restore Graph" Command="{Binding RestoreGraphCommand}" Height="25" Width="100" />
-            </StackPanel>
+            </DockPanel>
         </GroupBox>
 
         <GroupBox Header="Vertices" Grid.Row="2" Grid.Column="1" Margin="0 5">

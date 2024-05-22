@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GraphShape.Algorithms.OverlapRemoval;
+using QuikGraph.Algorithms;
 using QuikGraph.Algorithms.Search;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -51,21 +52,10 @@ namespace AdvancedCalculator.ViewModels
             [
                 new PocVertex("A"),
                 new PocVertex("B"),
-                //new PocVertex("C"),
-                //new PocVertex("D"),
-                //new PocVertex("E"),
-                //new PocVertex("F"),
             ];
 
             Graph.AddVertexRange(vertices);
             Graph.AddEdge(EdgeFactory(vertices[0], vertices[1]));
-            //Graph.AddEdge(EdgeFactory(vertices[0], vertices[2]));
-            //Graph.AddEdge(EdgeFactory(vertices[1], vertices[2]));
-            //Graph.AddEdge(EdgeFactory(vertices[2], vertices[3]));
-            //Graph.AddEdge(EdgeFactory(vertices[3], vertices[1]));
-            //Graph.AddEdge(EdgeFactory(vertices[4], vertices[0]));
-            //Graph.AddEdge(EdgeFactory(vertices[4], vertices[3]));
-            //Graph.AddEdge(EdgeFactory(vertices[4], vertices[5]));
 
             Algorithms =
             [
@@ -117,6 +107,37 @@ namespace AdvancedCalculator.ViewModels
             OnPropertyChanged(nameof(Graph));
 
             MessageBox.Show($"Edge path:\n{string.Join(", ", bfsResult)}", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        [RelayCommand]
+        private void RunDijkstraShortestPath()
+        {
+            if (!string.IsNullOrWhiteSpace(SourceVertexId) && !string.IsNullOrWhiteSpace(TargetVertexId))
+            {
+                Func<PocEdge, double> edgeCostFunc = e => e.Weight;
+                var source = GetVertexById(SourceVertexId);
+                var target = GetVertexById(TargetVertexId);
+                var dijsktra = Graph!.ShortestPathsDijkstra(edgeCostFunc, source);
+
+                if (dijsktra(target, out IEnumerable<PocEdge> path))
+                {
+                    foreach (var edge in path)
+                    {
+                        edge.Color = Brushes.Red;
+                    }
+
+                    ClearEdges();
+                    Graph.AddEdgeRange(path);
+                    OnPropertyChanged(nameof(Graph));
+
+                    MessageBox.Show($"Edge path:\n{string.Join(", ", path)}", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter the source and target vertex ID below!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         [RelayCommand]
